@@ -5,6 +5,7 @@ use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 use yii\web\IdentityInterface;
 
 /**
@@ -43,7 +44,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function behaviors()
     {
         return [
-            TimestampBehavior::className(),
+            TimestampBehavior::class,
         ];
     }
 
@@ -208,5 +209,21 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    public static function getUserList()
+    {
+        $arrays = self::find()->select(['id', 'username'])->all();//как сделать чтобы отображался номер ID тоже?
+        /**
+         * [
+         *  ['id' => 1, 'username' => 'user-one']
+         * ]
+         *
+         * [
+         *  1 => 'cinema'
+         * ]
+         *
+         */
+        return ArrayHelper::map($arrays, 'id', 'username');
     }
 }
