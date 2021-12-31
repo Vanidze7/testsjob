@@ -36,26 +36,37 @@ AppAsset::register($this);
         ],
     ]);
     $menuItems = [
-        ['label' => 'Главная', 'url' => ['/site/index']],
+        '<li>'
+        . Html::a('ФронтЕнд','http://testjob.local/')
+        . '</li>'
     ];
 
-    if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Логин', 'url' => ['/site/login']];
-    } else {
+    if (Yii::$app->controller->id == 'event' || Yii::$app->controller->id == 'ticket' || Yii::$app->controller->id == 'order' || Yii::$app->controller->id == 'order-ticket' )
+    {
+        /*$menuItems[] = [
+            'label' => 'Testproject',
+            'items' => [
+                ['label' => 'События', 'url' => ['/event/index']],
+                ['label' => 'Билеты', 'url' => ['/ticket/index']],
+                ['label' => 'Заказы', 'url' => ['/order/index']],
+                ['label' => 'Билеты заказов', 'url' => ['/order-ticket/index']]
+            ]
+        ];*/
         $menuItems[] = ['label' => 'События', 'url' => ['/event/index']];
         $menuItems[] = ['label' => 'Билеты', 'url' => ['/ticket/index']];
         $menuItems[] = ['label' => 'Заказы', 'url' => ['/order/index']];
         $menuItems[] = ['label' => 'Билеты заказов', 'url' => ['/order-ticket/index']];
+    }
 
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
+                'Выйти (' . Yii::$app->user->identity->username . ')',
                 ['class' => 'btn btn-link logout']
             )
             . Html::endForm()
             . '</li>';
-    }
+
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => $menuItems,

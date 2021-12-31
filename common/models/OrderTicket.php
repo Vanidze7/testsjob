@@ -46,30 +46,40 @@ class OrderTicket extends \yii\db\ActiveRecord
         ];
     }
 
-    public function beforeSave($insert)
+    public function beforeValidate()
     {
-        if ($insert)
+        if(!$this->bar_code)
             $this->bar_code =\Yii::$app->security->generateRandomString();
+        return parent::beforeValidate();
+    }
 
-        return parent::beforeSave($insert);
+    public function checktickets()
+    {
+        $tickets = 0;
+        $queryOrders = Order::find()->where(['event_id' => $this->order->event_id])->all();
+        foreach ($queryOrders as $order){
+            $queryTickets = OrderTicket::find()->where(['order_id' => $order->id])->count();
+            $tickets += $queryTickets;
+        }
+        if($tickets >= $this->order->event->count){
+            $this->order->event->status = Event::STATUS_3;
+        }else{
+            $this->order->event->status = Event::STATUS_1;
+        }
+        $this->order->event->save();
     }
 
     public function afterSave($insert, $changedAttributes)
     {
         parent::afterSave($insert, $changedAttributes);
+        $this->checktickets();
+    }
 
-        if($this->order->event->status != Event::STATUS_3){
-            $tickets = 0;
-            $queryOrders = Order::find()->where(['event_id' => $this->order->event_id])->all();
-            foreach ($queryOrders as $order){
-                $queryTickets = OrderTicket::find()->where(['order_id' => $order->id])->count();
-                $tickets += $queryTickets;
-            }
-            if($tickets >= $this->order->event->count){
-                $this->order->event->status = Event::STATUS_3;
-                $this->order->event->save();
-            }
-        }
+    public function afterDelete()
+    {
+        parent::afterDelete();
+        $this->checktickets();
+
     }
 
     public function getOrder()

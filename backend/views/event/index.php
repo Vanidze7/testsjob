@@ -32,6 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
             ],
             'count',
+            //'ticket_buy',
             ['class' => 'yii\grid\ActionColumn']
         ],
     ]); ?>

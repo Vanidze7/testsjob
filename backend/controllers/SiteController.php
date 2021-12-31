@@ -1,7 +1,10 @@
 <?php
 namespace backend\controllers;
 
+use common\models\Event;
+use common\models\Order;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -26,7 +29,6 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -73,7 +75,7 @@ class SiteController extends Controller
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
-
+        $this->layout = 'blank';
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
@@ -97,4 +99,19 @@ class SiteController extends Controller
 
         return $this->goHome();
     }
+
+    /*public function actionTestproject()
+    {
+        $events = new ActiveDataProvider([
+            'query' => Event::find(),
+        ]);
+        $orders = new ActiveDataProvider([
+            'query' => Order::find(),
+        ]);
+
+        return $this->render('testproject',[
+            'events' => $events,
+            'orders' => $orders,
+            ]);
+    }*/
 }

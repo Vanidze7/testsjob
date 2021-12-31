@@ -97,7 +97,7 @@ class Order extends \yii\db\ActiveRecord
     }
     public static function getOrderList()
     {
-        $arrays = self::find()->select('id')->column(); // ->scalar();
-        return $arrays;//ArrayHelper::map($arrays, 'id', 'id');
+        $arrays = self::find()->select('id')->asArray()->orderBy('id')->all(); // ->scalar();
+        return ArrayHelper::map($arrays, 'id', 'id');
     }
 }

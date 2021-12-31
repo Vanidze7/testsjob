@@ -8,7 +8,7 @@ use common\models\Ticket;
 use common\models\User;
 use frontend\models\CreateOrderForm;
 
-class TicketsController extends \yii\web\Controller
+class TestprojectController extends \yii\web\Controller
 {
     public function actionIndex()
     {

@@ -46,7 +46,7 @@ class OrderTicketController extends Controller
         $model = new OrderTicket();
 
         //$model->bar_code = \Yii::$app->security->generateRandomString();
-        if ($model->load(Yii::$app->request->post())  && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
