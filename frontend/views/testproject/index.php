@@ -1,9 +1,11 @@
 <?php
-/* @var $this yii\web\View */
-?>
-<h1>tickets/index</h1>
 
-<p>
-    You may change the content of this page by modifying
-    the file <code><?= __FILE__; ?></code>.
-</p>
+?>
+<div class="row">
+    <?php foreach ($events as $event) : ?>
+        <div class="col-md-3 event-point">
+            <h4><a href="<?= \yii\helpers\Url::to(['testproject/view-event', 'id' => $event->id]) ?>"><?= $event->title ?></a></h4>
+            <p><?= $event->description ?></p>
+        </div>
+    <?php endforeach; ?>
+</div>

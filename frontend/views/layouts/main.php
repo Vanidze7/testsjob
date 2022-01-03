@@ -36,22 +36,17 @@ AppAsset::register($this);
         ],
     ]);
     $menuItems = [
-
             '<li>'
-            . Html::a('Админка','http://admin.testjob.local/')
-            . '</li>'
-
-        //['label' => 'About', 'url' => ['/site/about']],
-        //['label' => 'Contact', 'url' => ['/site/contact']],
+            . Html::a('Админка','http://admin.testjob.local/') .
+            '</li>'
     ];
+
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Зарегестрироваться', 'url' => ['/site/signup']];
         $menuItems[] = ['label' => 'Войти', 'url' => ['/site/login']];
     } else {
-        /*if (\Yii::$app->controller->id == 'tickets') {
-            $menuItems[] = ['label' => 'Купить билет', 'url' => ['/tickets/create-order']];
-        }*/
-
+        if (\Yii::$app->controller->id == 'testproject')
+            $menuItems[] = ['label' => 'Мои заказы', 'url' => ['/testproject/user-orders']];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(

@@ -1,4 +1,5 @@
 <?php
+/** @var $model Order */
 
 use common\models\Order;
 use common\models\OrderTicket;
@@ -10,7 +11,7 @@ use yii\widgets\DetailView;
 $this->title = "Заказ № {$model->id}";
 $this->params['breadcrumbs'][] = ['label' => 'Заказы', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
+\yii\web\YiiAsset::register($this);//подключение ресурсов
 ?>
 <div class="order-view">
     <h1><?= Html::encode($this->title) ?></h1>

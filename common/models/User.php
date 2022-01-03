@@ -62,6 +62,12 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * {@inheritdoc}
      */
+
+    public function getOrder()
+    {
+        return $this->hasMany(Order::class, ['user_id' => 'id']);
+    }
+
     public static function findIdentity($id)
     {
         return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
@@ -214,16 +220,7 @@ class User extends ActiveRecord implements IdentityInterface
     public static function getUserList()
     {
         $arrays = self::find()->select(['id', 'username'])->all();//как сделать чтобы отображался номер ID тоже?
-        /**
-         * [
-         *  ['id' => 1, 'username' => 'user-one']
-         * ]
-         *
-         * [
-         *  1 => 'cinema'
-         * ]
-         *
-         */
+
         return ArrayHelper::map($arrays, 'id', 'username');
     }
 }
